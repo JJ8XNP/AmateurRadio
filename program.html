@@ -48,15 +48,253 @@
  
  
  
+例
+function TForm1.GetHamlogHandle(HandleName:String):HWnd;
+var
+  hWindow:HWnd;  R:TRect;  i:Integer;  ParentLeft,ParentTop:Integer;  hLogA  : HWND;
+begin
+  Result:=0;
+  ListBox3.Clear;  ListBox4.Clear;
+
+  hLogA := FindWindow('TForm_A',nil );    if hLogA = 0 then exit;
+  if GetWindowRect(hLogA, R) then else ShowMessage('Hamlog親Window位置取得失敗');
+
+  ParentLeft:=R.Left;
+  ParentTop:=R.Top;
+
+  hWindow :=GettopWindow(hLogA);
+  if GetWindowRect(hWindow, R) then else Memo2.Text:=Memo2.Text + 'GetWindowRect=False';
+
+      if (R.Left-ParentLeft) = 18                                    then begin  ListBox3.Items.Add('hCallSign'); ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 132                                   then begin  ListBox3.Items.Add('hDate');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 226                                   then begin  ListBox3.Items.Add('hTime');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 300) and ((R.Top-ParentTop) = 88)    then begin  ListBox3.Items.Add('hHis');      ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 344) and ((R.Top-ParentTop) = 88)    then begin  ListBox3.Items.Add('hMy');       ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 388                                   then begin  ListBox3.Items.Add('hFreq');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 472                                   then begin  ListBox3.Items.Add('hMode');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 526                                   then begin  ListBox3.Items.Add('hCode');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 600                                   then begin  ListBox3.Items.Add('hGL');       ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 674                                   then begin  ListBox3.Items.Add('hQSL');      ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 93 ) and ((R.Top-ParentTop) = 131)   then begin  ListBox3.Items.Add('hName');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 353                                   then begin  ListBox3.Items.Add('hQTH');      ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 93 ) and ((R.Top-ParentTop) = 166)   then begin  ListBox3.Items.Add('hRem1');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 93  )and ((R.Top-ParentTop) = 201)   then begin  ListBox3.Items.Add('hRem2');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 655                                   then begin  ListBox3.Items.Add('hSaveBut');  ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 371                                   then begin  ListBox3.Items.Add('hCkCQ');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 423                                   then begin  ListBox3.Items.Add('hCk1');      ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 463                                   then begin  ListBox3.Items.Add('hCk2');      ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 88                                    then begin  ListBox3.Items.Add('hCkDX');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 123                                   then begin  ListBox3.Items.Add('hListCall'); ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 300) and ((R.Top-ParentTop) = 34)    then begin  ListBox3.Items.Add('hListFreq'); ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 344) and ((R.Top-ParentTop) = 34)    then begin  ListBox3.Items.Add('hListR1');   ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 155                                   then begin  ListBox3.Items.Add('hListR2');   ListBox4.Items.Add(IntToStr(hWindow));    end;
+
+  for i:=2 to 23  do
+  begin
+      hWindow :=GetNextWindow(hWindow, GW_HWNDNEXT);
+      GetWindowRect(hWindow, R);
+
+      if (R.Left-ParentLeft) = 18                                    then begin  ListBox3.Items.Add('hCallSign'); ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 132                                   then begin  ListBox3.Items.Add('hDate');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 226                                   then begin  ListBox3.Items.Add('hTime');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 300) and ((R.Top-ParentTop) = 88)    then begin  ListBox3.Items.Add('hHis');      ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 344) and ((R.Top-ParentTop) = 88)    then begin  ListBox3.Items.Add('hMy');       ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 388                                   then begin  ListBox3.Items.Add('hFreq');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 472                                   then begin  ListBox3.Items.Add('hMode');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 526                                   then begin  ListBox3.Items.Add('hCode');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 600                                   then begin  ListBox3.Items.Add('hGL');       ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 674                                   then begin  ListBox3.Items.Add('hQSL');      ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 93 ) and ((R.Top-ParentTop) = 131)   then begin  ListBox3.Items.Add('hName');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 353                                   then begin  ListBox3.Items.Add('hQTH');      ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 93 ) and ((R.Top-ParentTop) = 166)   then begin  ListBox3.Items.Add('hRem1');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 93  )and ((R.Top-ParentTop) = 201)   then begin  ListBox3.Items.Add('hRem2');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 655                                   then begin  ListBox3.Items.Add('hSaveBut');  ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 371                                   then begin  ListBox3.Items.Add('hCkCQ');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 423                                   then begin  ListBox3.Items.Add('hCk1');      ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 463                                   then begin  ListBox3.Items.Add('hCk2');      ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 88                                    then begin  ListBox3.Items.Add('hCkDX');     ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 123                                   then begin  ListBox3.Items.Add('hListCall'); ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 300) and ((R.Top-ParentTop) = 34)    then begin  ListBox3.Items.Add('hListFreq'); ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if ((R.Left-ParentLeft) = 344) and ((R.Top-ParentTop) = 34)    then begin  ListBox3.Items.Add('hListR1');   ListBox4.Items.Add(IntToStr(hWindow));    end;
+      if (R.Left-ParentLeft) = 155                                   then begin  ListBox3.Items.Add('hListR2');   ListBox4.Items.Add(IntToStr(hWindow));    end;
+  end;
+
+  for i:=0 to ListBox3.Count-1  do if HandleName=  ListBox3.Items[i] then Result:=StrToInt(ListBox4.Items[i]);
+end;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ function TForm1.GetCTestWinHandle():String;
+var
+  hWindow:HWnd;   R:TRect;  i:Integer;  ParentLeft,ParentTop,ParentRight,ParentBottom:Integer;
+  Child01L, Child01T   :Integer;        NowLeft,NowTop,NowRight,NowBottom:Integer;
+  hLogA,hCallSign,hHis,hRegistration,hDup: HWND;
+  PC:PChar;   Len:integer;   name:string;
+begin
+  hLogA:=0;hCallSign:=0;hHis:=0;hRegistration:=0;
+
+  hLogA := FindWindow('Ctestwin',nil );    if hLogA = 0 then begin ShowMessage('FindWindow(Ctestwin)=0'); exit; end;      // 元に戻すため保存
+  if GetWindowRect(hLogA, R) then else ShowMessage('CTestWin親Window位置取得失敗1');
+  NowLeft:=R.Left;NowTop:=R.Top; NowRight:= R.Right;  NowBottom:=R.Bottom;      //SetWindowPos(hLogA,0, NowLeft,NowTop,NowRight-NowLeft, NowBottom-NowTop,0);
+  if SetWindowPos(hLogA,0,  1, 5,1650, 736,0) then else ShowMessage('CTestWinサイズ変更失敗');
+
+
+  ListBox31.Clear;  ListBox32.Clear;  Memo31.Text:='';
+
+      if GetWindowRect(hLogA, R) then else ShowMessage('CTestWin親Window位置取得失敗2');               //親のLeft,Topが求まる
+      ParentLeft:=R.Left;ParentTop:=R.Top; ParentRight:= R.Right;  ParentBottom:=R.Bottom;
+
+  hWindow :=GettopWindow(hLogA);    //#32770//指定された親ウィンドウが持つ子ウィンドウの Z オーダーを調べ、Z オーダーが一番上の子ウィンドウのハンドルを返します。
+  hWindow :=GettopWindow(hWindow);  //Button
+
+      if GetWindowRect(hWindow, R) then else Memo31.Text:=Memo31.Text + 'GetWindowRect=False';      //１番目のコントロールのLeft,Topが求まる
+     Memo31.Text:=Memo31.Text + 'Left=' + IntTOStr(R.Left-ParentLeft)   + '   Top=' + IntTOStr(R.Top-ParentTop) ;
+
+      if ((R.Left-ParentLeft) = 670) and ((R.Top-ParentTop) =604) then     //Top=708   ParentLeft=1  ParentTop=5  ParentRight=1651  ParentBottom=741
+      begin                                                                //の時の値につきサイズ変更で変わる
+      hHis:=hWindow; 
+      end;
+
+      if ((R.Left-ParentLeft) = 114) and ((R.Top-ParentTop) =604) then
+      begin
+      hCallSign:=hWindow; 
+      end;
+
+      if ((R.Left-ParentLeft) = 362) and ((R.Top-ParentTop) =569) then
+      begin
+      hRegistration:=hWindow; 
+      end;
+
+      if ((R.Left-ParentLeft) = 18) and ((R.Top-ParentTop) =569) then
+      begin
+      hDup:=hWindow; 
+      end;
+
+  for i:=2 to 29  do
+  begin
+      hWindow :=GetNextWindow(hWindow, GW_HWNDNEXT);    //23回
+      GetWindowRect(hWindow, R);    //１番目のコントロールのLeft,Topが求まる
+      Child01L:= R.Left;
+      Child01T:= R.Top;
+      Memo31.Text:=Memo31.Text + #$D#$A + 'Left=' + IntTOStr(R.Left-ParentLeft)   + '   Top=' + IntTOStr(R.Top-ParentTop) ;
+
+      if ((R.Left-ParentLeft) = 670) and ((R.Top-ParentTop) =604) then     //Top=708   ParentLeft=1  ParentTop=5  ParentRight=1651  ParentBottom=741
+      begin                                                                //の時の値につきサイズ変更で変わる
+      hHis:=hWindow; 
+      end;
+
+      if ((R.Left-ParentLeft) = 114) and ((R.Top-ParentTop) =604) then
+      begin
+      hCallSign:=hWindow; 
+      end;
+
+      if ((R.Left-ParentLeft) = 362) and ((R.Top-ParentTop) =569) then
+      begin
+      hRegistration:=hWindow; 
+      end;
+
+      if ((R.Left-ParentLeft) = 18) and ((R.Top-ParentTop) =569) then
+      begin
+      hDup:=hWindow; //ListBox31.Items.Add('hCallSign :=' + IntToStr(hWindow));
+      end;
+
+  end;
+
+  SetWindowPos(hLogA,0, NowLeft,NowTop,NowRight-NowLeft, NowBottom-NowTop,0);
+  Result:= IntToStr(hCallSign)  + #$D#$A + IntToStr(hHis)  + #$D#$A + IntToStr( hRegistration) + #$D#$A + IntToStr( hDup);
+end;
+
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+例 
+function  TForm1.GetDSCWHandle():String;
+var
+  hNow,hWindow:HWnd;   R:TRect;  i:Integer;  ParentLeft,ParentTop,ParentRight,ParentBottom:Integer;
+  Child01L, Child01T   :Integer;        NowLeft,NowTop,NowRight,NowBottom:Integer;
+  hLogA,hCallSign,hHis,hRegistration,hDup: HWND;
+  PC:PChar;   Len:integer;  Classname, name:string;
+begin
+  Result:='';
+  ListBox61.Clear;  ListBox62.Clear;  Memo61.Text:='';
+  hLogA:=0;hCallSign:=0;hHis:=0;hRegistration:=0;
+
+  hLogA := FindWindow('hWndDSCW',nil );// FindWindow('hWndDSCW','DigitalSoundCW V17.00.00   [Link to Turbo HamLog]' );  //元に戻すため保存
+  hNow:= hLogA;
+
+   if GetWindowRect(hLogA, R) then else ShowMessage('親Window位置取得失敗DSCW_A');               //親のLeft,Topが求まる
+   NowLeft:=R.Left;   NowTop:=R.Top;    NowRight:= R.Right;     NowBottom:=R.Bottom;
+   if SetWindowPos(hLogA,0, 0,0,R.Right-R.Left,R.Bottom-R.Top,0) then begin end else ShowMessage('X');
+
+
+   if GetWindowRect(hLogA, R) then else ShowMessage('親Window位置取得失敗DSCW_B');               //親のLeft,Topが求まる
+   ParentLeft:=R.Left;ParentTop:=R.Top; ParentRight:= R.Right;  ParentBottom:=R.Bottom;  //ParentLeft=960   ParentTop=600   ParentRight=960   ParentBottom=600
+
+    hLogA := FindWindow('hWndDSCW',nil );
+      hLogA := FindWindowEX(hLogA,0,'#32770',nil);
+
+            hLogA := GettopWindow(hLogA);
+              GetMem(PC, 100);
+              Len :=GetClassName(hLogA, PC, 100);
+              SetString(Classname, PC, Len);
+              FreeMem(PC);
+              if Classname = 'Button' then
+              begin
+                if GetWindowRect(hLogA, R) then else ShowMessage('親Window位置取得失敗DSCW1');
+                Memo61.Text:=Memo61.Text + 'Left=' + IntTOStr(R.Left-ParentLeft)   + '   Top=' + IntTOStr(R.Top-ParentTop) ;
+                  if ((R.Left-ParentLeft) = 375) and ((R.Top-ParentTop) = 247) then
+                  begin  hCallSign:=hLogA;  ListBox61.Items.Add('hCallSignR:=' + IntToStr(hCallSign)); Edit61.Text:=IntToStr(hCallSign); end;
+                  if ((R.Left-ParentLeft) = 778) and ((R.Top-ParentTop) = 249) then
+                  begin  hCallSign:=hLogA;  ListBox61.Items.Add('hCallSignL:=' + IntToStr(hCallSign)); Edit61.Text:=IntToStr(hCallSign); end;
+              end;
+
+          for i:=2 to 132 do
+          begin
+            hLogA := GetNextWindow(hLogA, GW_HWNDNEXT);
+              GetMem(PC, 100);
+              Len :=GetClassName(hLogA, PC, 100);
+              SetString(Classname, PC, Len);
+              FreeMem(PC);
+              if Classname = 'Button' then
+              begin
+                if GetWindowRect(hLogA, R) then else ShowMessage('親Window位置取得失敗' + IntToStr(i));
+                Memo61.Text:=Memo61.Text + 'Left=' + IntTOStr(R.Left-ParentLeft)   + '   Top=' + IntTOStr(R.Top-ParentTop) ;
+                  if ((R.Left-ParentLeft) = 375) and ((R.Top-ParentTop) = 247) then
+                  begin  hCallSign:=hLogA;  ListBox61.Items.Add('hCallSignR:=' + IntToStr(hCallSign)); Edit61.Text:=IntToStr(hCallSign); end;
+                  if ((R.Left-ParentLeft) = 778) and ((R.Top-ParentTop) = 249) then
+                  begin  hCallSign:=hLogA;  ListBox61.Items.Add('hCallSignL:=' + IntToStr(hCallSign)); Edit61.Text:=IntToStr(hCallSign); end;
+              end;
+          end;
+       Memo61.Text:=Memo61.Text + #$D#$A +  'ParentLeft=' + IntTOStr(ParentLeft)   + '   ParentTop=' + IntTOStr(ParentTop)
+                             +'   '      +  'ParentRight='+ IntTOStr(ParentRight)  + '   ParentBottom=' + IntToStr(ParentBottom) ;
+  SetWindowPos(hNow,0, NowLeft,NowTop,NowRight-NowLeft, NowBottom-NowTop,0);
+
+  Result:= IntToStr(hCallSign);
+end;
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
  </pre>
   
  
- 
- 
-<Center>       
-　　　<img src="QSL2.jpg" width="300" height="200" alt="QSL NO2">
-</Center> 
- 
+
   <footer>
     <div class="">
 
