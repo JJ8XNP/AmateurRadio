@@ -35,20 +35,19 @@ arduino で CW Auto Keyer
 ------------------------------------------------------------------------------------------------------
 // CW Auto Keyer JJ8XNP
 
-int Hz = 600;          //600Hz
+int Hz = 600;          //600Hzトーン
 int SPD;               //speed 短点のmS
-int Keypin     =  5;
-int ledPinR    =  6;  
-int ledPinG    =  7;
-int Soundpin   = 12;
-int buttonApin =  3;       //CQ
-int buttonLongpin  = 1;   //LT;
-int buttonShortpin = 2;   //ST;
+int Keypin     =  5;   //送信機Key入力の間にフォトカプラを入れてある
+int ledPinR    =  6;   //ブレッドボードの赤色LED
+int ledPinG    =  7;   //ブレッドボードの緑色色LED
+int Soundpin   = 12;      //圧電SP
+int buttonApin =  3;      //CQコール
+int buttonLongpin  = 1;   //LT;長点送出ボタン、パドルの片方に
+int buttonShortpin = 2;   //ST;短点送出ボタン、パドルの片方に、パドルGNDはarduino本体GNDにつなぐ
 const int VR_pin   = A0;  // analog pin connected to VR output  Speed可変 10kΩ
 
 
 void setup() {
-
    pinMode(LED_BUILTIN, OUTPUT);           //arduino本体のLED、pinナンバー13   LED_BUILTINは本体で定義済
    pinMode(Keypin, OUTPUT);                //Key Input用、   ブレッドボードの緑色LED
    //digitalWrite(Keypin, LOW);            //    
@@ -117,22 +116,15 @@ teisei;     //   HH *  訂正     as;         //   AS
 
  
 void loop() { 
-   SPD = analogRead(VR_pin)/5;                   // analog pin connected to VR output  Speed可変
-  //SPD = 100;  //100;12WPM  60;20WPM
-if (digitalRead(buttonLongpin)  == LOW)   { LT();   }   //長点
-if (digitalRead(buttonShortpin) == LOW)   { ST();   }   //短点
+  SPD = analogRead(VR_pin)/5;       // analog pin connected to VR output  Speed可変  SPD = 100;  //100;12WPM  60;20WPM
+  if (digitalRead(buttonLongpin)  == LOW)   { LT();   }   //長点
+  if (digitalRead(buttonShortpin) == LOW)   { ST();   }   //短点
 
-if (digitalRead(buttonApin) == LOW)   {
-  digitalWrite(ledPinR, HIGH);  delay(200); digitalWrite(ledPinR, LOW); 
-  digitalWrite(LED_BUILTIN, HIGH); 
-/*
-Num0();Num1();Num2();Num3();Num4();Num5();Num6();Num7();Num8();Num9();
-A();B();C();D();E();FF();G();H();I();J();K();L();M();N();O();P();Q();R();S();T();U();V();W();X();Y();Z();
-*/
-  C(); Q(); space();   C(); Q(); space();  D(); E();   space(); J(); J(); Num8(); X(); N(); P(); space(); K();
-  //Q();R();V();
-  digitalWrite(LED_BUILTIN, LOW);  //arduino本体のLED、pinナンバー13
-
+  if (digitalRead(buttonApin) == LOW)   {
+    digitalWrite(ledPinR, HIGH);  delay(200); digitalWrite(ledPinR, LOW); 
+    digitalWrite(LED_BUILTIN, HIGH); 
+    C(); Q(); space();   C(); Q(); space();  D(); E();   space(); J(); J(); Num8(); X(); N(); P(); space(); K();
+    digitalWrite(LED_BUILTIN, LOW);  //arduino本体のLED、pinナンバー13
 }
 
 }
