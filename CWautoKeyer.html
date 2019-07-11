@@ -136,6 +136,41 @@ void loop() {
 }
 -----------------------------------------------------------------------------------------------------
 
+
+
+
+
+
+シンプルにした場合
+arduino UNO R3 と 圧電ブザー(12番とGND)と 10kΩ可変抵抗器(VCCとGNDと中点はアナログ0番)のみ
+1番2番とGNDをパドルに接続
+-----------------------------------------------------------------------------------------------------
+//#include <EEPROM.h>
+
+int SPD;               //speed 短点のmS
+int Keypin     =  5;
+int Soundpin   = 12;
+int buttonLongpin  = 1;   //LT;
+int buttonShortpin = 2;   //ST;
+const int VR_pin   = A0;  // analog pin connected to VR output  Speed可変 10kΩ
+
+void setup() {
+   pinMode(Keypin, OUTPUT); 
+   pinMode(buttonLongpin , INPUT_PULLUP);  //6番pin  LT;
+   pinMode(buttonShortpin, INPUT_PULLUP);  //4番pin  ST;   
+ }
+
+void LT(){     digitalWrite(Keypin, HIGH);  tone(Soundpin, 600, 3*SPD);   delay((3)*SPD);      digitalWrite(Keypin, LOW); delay((1+0)*SPD);      }
+void ST(){     digitalWrite(Keypin, HIGH);  tone(Soundpin, 600, 1*SPD);   delay((1)*SPD);      digitalWrite(Keypin, LOW); delay((1+0)*SPD);      }  
+void ET(){delay((1+1)*SPD);}
+ 
+void loop() { 
+  SPD = analogRead(VR_pin)/5;                   // analog pin connected to VR output  Speed可変  34-200   100;12WPM  60;20WPM
+  if (SPD < 20  )   { SPD = 100;   }
+  if (digitalRead(buttonLongpin)  == LOW)   { LT();   }   //長点
+  if (digitalRead(buttonShortpin) == LOW)   { ST();   }   //短点
+}
+-----------------------------------------------------------------------------------------------------
  </pre>
 
   <div>
