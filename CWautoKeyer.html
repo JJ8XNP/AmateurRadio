@@ -30,7 +30,12 @@
 <Hr Size="1" Color="#fe81df" Width="100%"> 
   
 <pre>
-arduino で CW Auto Keyer
+arduino で CW Auto Keyerをつくってみました。
+
+マルツ通販で4チャンネルメモリーキーヤーをすでに購入し、使っているのですが
+arduino で、自分でできないものかと思い、やってみました。
+無事動作したので、満足、チャンネルメモリーキーヤーの方で十分なので、これを使う事はないと思います。
+
 
 ------------------------------------------------------------------------------------------------------
 // CW Auto Keyer JJ8XNP
@@ -120,6 +125,7 @@ void loop() {
   if (digitalRead(buttonLongpin)  == LOW)   { LT();   }   //長点
   if (digitalRead(buttonShortpin) == LOW)   { ST();   }   //短点
 
+     //CQマシン
   if (digitalRead(buttonApin) == LOW)   {
     digitalWrite(ledPinR, HIGH);  delay(200); digitalWrite(ledPinR, LOW); 
     digitalWrite(LED_BUILTIN, HIGH); 
