@@ -42,12 +42,12 @@ USBリレーのAVRの中を書き換える。
 
 今回は、基板に、USB-Relay-2、USB-Relay-1とシルク印刷されているタイプで試行した。
 aruduino UNOをISPとして使用、スケッチはArduinoISPを書き込み
-その後、
-設定はaduinoIDEでツール→ATtiny25/45/85 (リレーに付いているのはATtiny45)
-シリアルポート→私の場合COM6
-書き込み装置→arduino as ISP
+その後、設定はaduinoIDEで
+   ツール→ATtiny25/45/85 (リレーに付いているのはATtiny45)
+   シリアルポート→私の場合COM6
+   書き込み装置→arduino as ISP
 として、6ピン(Vcc,GND,13,12,11,10)をUSBリレーの端子に接続
-(リレーの基板に書き込み用に端子が付いている)
+   (リレーの基板に書き込み用に端子が付いている)
 avrdude.exeとavrdude-GUI.exeを使い、でGUIで読み出しと書き込みしてみた。
 読み出したのは、Flash.hex、eeprom.eep、Fuse、Lock Bit
 認識できない方と正常なのとの違いはFuseであったので
@@ -57,10 +57,6 @@ USB-Relay-2は書き換えできた。
 うまくいったのでUSB-Relay-1の方を試してみたら
 ロックビットで制限がかかっていた。(値：FC  下位ビット00)
 別のリレーのシリアル番号の違うものを試してみると読み書きできた。
-
-
-
-
  </pre>
 
   <div>
