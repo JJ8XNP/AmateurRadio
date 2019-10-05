@@ -42,11 +42,21 @@ USBリレーのAVRの中を書き換える。
 aruduino UNOをISPとして使用、スケッチはArduinoISPを書き込み
 その後、設定はaduinoIDEで
    ツール→ATtiny25/45/85 (リレーに付いているのはATtiny45)
+   プロセッサ：ATtiny45  
+   クロック：Internal 1MHz   
    シリアルポート→私の場合COM6
    書き込み装置→arduino as ISP
 として、6ピン(Vcc,GND,13,12,11,10)をUSBリレーの端子に接続
    (リレーの基板に書き込み用に端子が付いている)
-avrdude.exeとavrdude-GUI.exeを使い、でGUIで読み出しと書き込みしてみた。
+avrdude.exeをavrdude-GUI.exeでGUIで操作
+    avrdude.exe File指定
+    Programmer:Arduino(aruduino)
+    Port:COM6(********)
+    Device:ATtiny45(45)
+    Command line Option:-b 19200
+    EEOROMに編集後のeeprom.eepを指定し、
+EEOROMのReadボタンを押す。
+
 読み出したのは、Flash.hex、eeprom.eep、Fuse、Lock Bit
 認識できない方と正常なのとの違いはFuseであったので
 Fuseを正常なものに書きかえたら、認識された。
@@ -59,6 +69,27 @@ USB-Relay-2は書き換えできた。
 ロックビットで制限がかかっているUSBリレーを読み書き可能にするには
 12Vの高電圧を掛けてパラレルプログラミングしなくてはいけないようだ。
 その場合、フラッシュデータは取り出せない。
+
+
+USBリレーのシリアル番号の書き換え     (USB HIDのシリアル番号ではない、シリアル番号は無い)
+  何回か大陸から通販でUSBリレーを購入したが、リレーのシリアル番号が同じものが届く。
+  これで複数個PCにつないでも1個しか認識されない。
+  そのためシリアル番号を変更したかった。
+シリアル番号はeepromに見つけることができた。  
+    eepromの内容
+    例：1行目
+    :20000000485552544D00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF6A
+       00485552544D00   先頭と最後尾00で囲まれた485552544がシリアル番号   「HURTM」  $48は「H」
+   これを「HURTM」から「PPPPP」にバイナリーエディタ書きかえる。
+   この文字列ならチェックサムは同じでいける。
+    (ASC文字)485552544D = (バイナリー) 34 38 35 35 35  32 35 34 34 44
+                               ------→35 30 35 30 35 30 35 30 35 30 
+    3ヵ所あるので書きかえる
+  
+avrdude-GUI.exeでGUIで操作
+    EEOROMに編集後のeeprom.eepを指定し、
+EEOROMのWriteボタンを押す。
+出来たUSBリレーをPCで認識しシリアル番号が変わっていて操作もできた。
  </pre>
 
   <div>
