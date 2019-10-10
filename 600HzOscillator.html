@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+ 
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-139712677-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'UA-139712677-1');
+</script>
+ 
+<meta charset="utf-8">
+ 
+<title>arduino で 600Hz発振器</title>
+ 
+<meta name="google-site-verification" content="I-LsmMDbJSnJCGxePGb5OlbRiLffiCdF2F6bxDN9h28" /> 
+ 
+</head>
+<body bgcolor="#f6f6f6" text="#000000"link="#0000ff" vlink="#ff00ff" alink="#ff0000">
+
+
+<!--600HzOscillator.html-->
+
+
+
+<Hr Size="1" Color="#fe81df" Width="100%">
+<FONT size="+2" color="#000000"><B>arduino で 600Hz発振器</B></FONT>
+<Hr Size="1" Color="#fe81df" Width="100%"> 
+  
+<pre>
+arduino nano互換機で arduino で 600Hz発振器を作成。
+
+
+------------------------------------------------------------------------------------------------------
+// CW 600HzSingleKeySound JJ8XNP
+
+int Hz = 600;                  //600Hz
+int Soundpin   = 12;           //スピーカー
+int buttonApin =  3;           //StraitKey
+
+void setup() {
+   pinMode(LED_BUILTIN, OUTPUT);
+   pinMode(buttonApin, INPUT_PULLUP);
+   digitalWrite(buttonApin, HIGH);
+   digitalWrite(LED_BUILTIN, LOW);
+ }
+
+void loop() { 
+if (digitalRead(buttonApin)  == LOW)   {   tone(Soundpin, Hz);   digitalWrite(LED_BUILTIN, HIGH);}  
+if (digitalRead(buttonApin) == HIGH)   { noTone(Soundpin);       digitalWrite(LED_BUILTIN, LOW); }  
+}
+-----------------------------------------------------------------------------------------------------
+ </pre>
+
+
+<1--
+  <div>　<img src="arduinoCWAutoKeyer.jpg" width="917" height="702" alt="配線図">    </div>
+-->
+  
+  
+  
+  
+
+  <footer>
+    <div class=""><p>by JJ8XNP   2019/10/10</p></div>
+  </footer>
+</body>
+</html>
+
+c 2019 GitHub, Inc.
