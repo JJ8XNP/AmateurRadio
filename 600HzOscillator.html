@@ -37,8 +37,8 @@ arduino nano互換機で 600Hz発振器を作成。
 // CW 600HzSingleKeySound JJ8XNP
 
 int Hz = 600;                  //600Hz
-int Soundpin   = 12;           //スピーカー
-int buttonApin =  3;           //StraitKey
+int Soundpin   = 12;           //スピーカー 12番ピンとGNDにつなぐ。
+int buttonApin =  3;           //StraitKey 10kΩ抵抗を付加(電源が入っていない時のため)
 
 void setup() {
    pinMode(LED_BUILTIN, OUTPUT);
