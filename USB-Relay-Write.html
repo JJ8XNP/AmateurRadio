@@ -40,13 +40,14 @@ USBリレーのAVRの中を書き換える。
 
 今回は、基板に、USB-Relay-2、USB-Relay-1とシルク印刷されているタイプで試行した。
 aruduino UNOをISPとして使用、スケッチはArduinoISPを書き込み
-その後、設定はaduinoIDEで
+<!--その後、設定はaduinoIDEで
    ツール→ATtiny25/45/85 (リレーに付いているのはATtiny45)
    プロセッサ：ATtiny45  
    クロック：Internal 1MHz   
    シリアルポート→私の場合COM6
-   書き込み装置→arduino as ISP
-として、6ピン(Vcc,GND,13,12,11,10)をUSBリレーの端子に接続
+   書き込み装置→arduino as ISP -->
+6ピンをUSBリレーの端子に接続  
+(arduino)Vcc,GND,13,12,11,10 == (USBRelaiのATtiny45)5V,GND,SCK,MISO,MOSI,RST
    (リレーの基板に書き込み用に端子が付いている)
 avrdude.exeをavrdude-GUI.exeでGUIで操作
     avrdude.exe File指定
@@ -91,6 +92,13 @@ avrdude-GUI.exeでGUIで操作
     EEOROMに編集後のeeprom.eepを指定し、
 EEOROMのWriteボタンを押す。
 出来たUSBリレーをPCで認識しシリアル番号が変わっていて操作もできた。
+
+
+後日USBaspを入手したのでやってみる。
+avrdude-GUI.exeでGUIで操作
+Portに空白、COM*、LPT1、USBにしても読み出せた。
+Command line Optionも空白でも読み出せた。
+
  </pre>
 
   <div>
