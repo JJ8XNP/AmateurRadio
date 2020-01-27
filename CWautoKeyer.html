@@ -34,7 +34,8 @@ arduino で CW Auto Keyerをつくってみました。
 
 マルツ通販で4チャンネルメモリーキーヤーをすでに購入し、使っているのですが
 arduino で、自分でできないものかと思い、やってみました。
-無事動作したので、満足、4チャンネルメモリーキーヤーの方で十分なので、これを使う事はないと思います。
+無事動作したので、満足、4チャンネルメモリーキーヤーの方で十分なので、
+これを使う事はないと思います。
 
 
 ------------------------------------------------------------------------------------------------------
@@ -67,14 +68,20 @@ void setup() {
 
 
 //以下、関数 
-void LT(){   digitalWrite(ledPinG, HIGH);  digitalWrite(Keypin, HIGH);  tone(Soundpin, Hz, 3*SPD);   delay((3)*SPD);    digitalWrite(ledPinG, LOW);  digitalWrite(Keypin, LOW); delay((1+0)*SPD);      }
-void ST(){   digitalWrite(ledPinG, HIGH);  digitalWrite(Keypin, HIGH);  tone(Soundpin, Hz, 1*SPD);   delay((1)*SPD);    digitalWrite(ledPinG, LOW);  digitalWrite(Keypin, LOW); delay((1+0)*SPD);      }  
+void LT(){   digitalWrite(ledPinG, HIGH);  digitalWrite(Keypin, HIGH);  
+tone(Soundpin, Hz, 3*SPD);   delay((3)*SPD);    digitalWrite(ledPinG, LOW);  
+digitalWrite(Keypin, LOW); delay((1+0)*SPD);      }
+void ST(){   digitalWrite(ledPinG, HIGH);  digitalWrite(Keypin, HIGH);  
+tone(Soundpin, Hz, 1*SPD);   delay((1)*SPD);    digitalWrite(ledPinG, LOW);  
+digitalWrite(Keypin, LOW); delay((1+0)*SPD);      }  
 void ET(){delay((1+1)*SPD);}
 
 void A(){ST();LT();ET();}
 void B(){LT();ST();ST();ST();ET();}
 void C(){LT();ST();LT();ST();ET();}
-/*void C(){tone(8, Hz, 3*SPD); delay((1+3)*SPD);  tone(8, Hz, 1*SPD); delay((1+1)*SPD);  tone(8, Hz, 3*SPD); delay((1+3)*SPD);  tone(8, Hz, 1*SPD); delay((1+1)*SPD);    delay((1+1)*SPD);}*/
+/*void C(){tone(8, Hz, 3*SPD); delay((1+3)*SPD);  tone(8, Hz, 1*SPD); 
+delay((1+1)*SPD);  tone(8, Hz, 3*SPD); delay((1+3)*SPD);  tone(8, Hz, 1*SPD); 
+delay((1+1)*SPD);    delay((1+1)*SPD);}*/
 void D(){LT();ST();ST();ET();}
 void E(){ST();ET();          }
 void FF(){ST();ST();LT();ST();ET();}  //Fは他に使われている？
@@ -113,15 +120,19 @@ void Num9(){LT();LT();LT();LT();ST();ET();}
 void space(){  delay(4*SPD);}
 
 /*   
-    bt;// =    ar;// +    va;// ^    kn;// [    BK;// ]    HI;// !    Lkakko; //(   Rkakko; //)   Rkakukakko; //<    
-Lkakukakko; //>    sharp;   //#    stringmark; //$    piriod;     //.    kamma;      //,    zyuuten;    //:    question;   //?    
-ryakuhu;    // ’***    mainas;     //-     syasen;     // /    inyouhu;    // "   引用符    attomark;   // @     
+    bt;// =    ar;// +    va;// ^    kn;// [    BK;// ]    HI;// !    
+    Lkakko; //(   Rkakko; //)   Rkakukakko; //<    
+Lkakukakko; //>    sharp;   //#    stringmark; //$    piriod;     //.    
+kamma;      //,    zyuuten;    //:    question;   //?    
+ryakuhu;    // ’***    mainas;     //-     syasen;     // /    
+inyouhu;    // "   引用符    attomark;   // @     
 teisei;     //   HH *  訂正     as;         //   AS    
 */
 
  
 void loop() { 
-  SPD = analogRead(VR_pin)/5;       // analog pin connected to VR output  Speed可変  SPD = 100;  //100;12WPM  60;20WPM
+  SPD = analogRead(VR_pin)/5;       
+  // analog pin connected to VR output  Speed可変  SPD = 100;  //100;12WPM  60;20WPM
   if (digitalRead(buttonLongpin)  == LOW)   { LT();   }   //長点
   if (digitalRead(buttonShortpin) == LOW)   { ST();   }   //短点
 
@@ -129,12 +140,13 @@ void loop() {
   if (digitalRead(buttonApin) == LOW)   {
     digitalWrite(ledPinR, HIGH);  delay(200); digitalWrite(ledPinR, LOW); 
     digitalWrite(LED_BUILTIN, HIGH); 
-    C(); Q(); space();   C(); Q(); space();  D(); E();   space(); J(); J(); Num8(); X(); N(); P(); space(); K();
+    C(); Q(); space();   C(); Q(); space();  D(); E();   space(); 
+    J(); J(); Num8(); X(); N(); P(); space(); K();
     digitalWrite(LED_BUILTIN, LOW);  //arduino本体のLED、pinナンバー13
 }
 
 }
------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
  </pre>
 
   <div>
@@ -148,7 +160,7 @@ void loop() {
 シンプルにした場合
 arduino UNO R3 と 圧電ブザー(12番とGND)と 10kΩ可変抵抗器(VCCとGNDと中点はアナログ0番)のみ
 1番2番とGNDをパドルに接続、5番をフォトカプラの入力に、出力は送信機入力へ接続
------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------
 //#include <EEPROM.h>
 
 int SPD;               //speed 短点のmS
@@ -164,17 +176,20 @@ void setup() {
    pinMode(buttonShortpin, INPUT_PULLUP);  //4番pin  ST;   
  }
 
-void LT(){     digitalWrite(Keypin, HIGH);  tone(Soundpin, 600, 3*SPD);   delay((3)*SPD);      digitalWrite(Keypin, LOW); delay((1+0)*SPD);      }
-void ST(){     digitalWrite(Keypin, HIGH);  tone(Soundpin, 600, 1*SPD);   delay((1)*SPD);      digitalWrite(Keypin, LOW); delay((1+0)*SPD);      }  
+void LT(){     digitalWrite(Keypin, HIGH);  tone(Soundpin, 600, 3*SPD);   
+delay((3)*SPD);      digitalWrite(Keypin, LOW); delay((1+0)*SPD);      }
+void ST(){     digitalWrite(Keypin, HIGH);  tone(Soundpin, 600, 1*SPD);   
+delay((1)*SPD);      digitalWrite(Keypin, LOW); delay((1+0)*SPD);      }  
 void ET(){delay((1+1)*SPD);}
  
 void loop() { 
-  SPD = analogRead(VR_pin)/5;                   // analog pin connected to VR output  Speed可変  34-200   100;12WPM  60;20WPM
+  SPD = analogRead(VR_pin)/5;                   
+  // analog pin connected to VR output  Speed可変  34-200   100;12WPM  60;20WPM
   if (SPD < 20  )   { SPD = 100;   }
   if (digitalRead(buttonLongpin)  == LOW)   { LT();   }   //長点
   if (digitalRead(buttonShortpin) == LOW)   { ST();   }   //短点
 }
------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------
  </pre>  
   
   
