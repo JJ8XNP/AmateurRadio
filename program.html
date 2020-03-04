@@ -283,7 +283,53 @@ end;
  
  
  
- 
+
+
+
+
+//■■■■■■■■■■■  JARL会員検索結果取得  ■■■■■■■■■■■■■■■
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  WebBrowser1.Navigate(
+  'https://www.jarl.com/Page/Search/MemberSearch.aspx?Language=Jp');
+end;
+
+procedure TForm1.Button2Click(Sender: TObject);
+var
+  IEObj           : InternetExplorer;
+  Doc2            : IHtmlDocument2;
+  iInputElement   : IHTMLInputElement;
+  iButtonElement  : DispHTMLButtonElement;
+  IEElement       : IHTMLElement;
+begin
+  IEObj := WebBrowser1.Application as InternetExplorer;
+  Doc2 := IEObj.Document as IHTMLDocument2;
+
+    //iButtonElement:= Doc2.all.item('btnClear', 0) as DispHTMLButtonElement;
+    //iButtonElement.click;                //クリアボタン押す
+
+    iInputElement       := Doc2.All.Item ('txtCallSign',0) as iHTMLInputElement;
+
+    iInputElement.value := 'JJ8JJJ';       //調べたいコールサイン
+
+    iButtonElement:= Doc2.all.item('btnSearch', 0) as DispHTMLButtonElement;
+    iButtonElement.click;                  //検索ボタン押す
+
+    while WebBrowser1.ReadyState < READYSTATE_COMPLETE	 do 
+    begin Application.ProcessMessages; end;
+
+    IEElement := (WebBrowser1.Document as IHTMLDocument2).body.parentElement;
+
+    if  Pos('87ceeb' ,IEElement.outerHTML)<>0 then begin end
+    else
+    begin
+      if       Pos('○ No' ,IEElement.outerHTML)<>0    then Edit1.Text := '△'
+      else if (Pos('○ Yes',IEElement.outerHTML)<>0) 
+          and (Pos('○ Yes',IEElement.outerHTML)<5100) then Edit1.Text := '○'
+      else                                                  Edit1.Text := '×';
+    end;
+end;
+
  
  
  
