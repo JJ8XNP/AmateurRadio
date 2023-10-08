@@ -361,74 +361,6 @@ begin
 end; 
  
  
- 
- 
- //●●●●●●●●●●●●●●●●●●●●●●● 無線局最大出力検索 ●●●●●●●●●●●●●●●●●●●●●●●
-
-  private    { Private 宣言 }
-    FCallStr:String;         //調べるコールサイン
-    PowerResult:String;      //検索結果
-
-
-
-procedure TForm1.Search_Soumu_CSV_Thread;
-var
-  SUTF8:UTF8String; S,Power,Address,Address1:String; i,m:Integer; SL:TStringList;
-begin                                                                                          //UTF8でcsv出力
-  SUTF8:=GetUrlContent('https://www.tele.soumu.go.jp/musen/list?ST=1&OF=1&DA=1&OW=AT&SK=2&DC=1&SC=1&MA='+ FCallStr);
-  S:=UTF8Decode(SUTF8);
-
-  SL := TStringList.Create;
-  try
-    SL.Text:=S;
-    m:=0;             //局数を求める
-
-    if TryStrToInt(  SearchCSV(SL[0],2), m  ) then else PowerResult:='無線局検索エラー';    //局数SearchCSV(SL[0],2)
-    if m=0 then begin PowerResult:= IntToStr(YearOf(Now)) + '▼局';  end;                   //局数0で2022▼局」と返す
-
-    if (PowerResult='無線局検索エラー') or (m=0) then else
-    begin                                                       //例JA3JMと検索すると  JA3JM*も含まれるので除去したい
-      for i:=1 to m do if FCallStr  = Trim(Copy(SearchCSV(SL[i],21),1,9)) then else SL[i]:=',,,,,,,,,,,,,,,,,,,,,,,,';
-
-        S:=SL.Text;  Power:='';                                  //無線局最高出力を探索   低出力で2アマ以上は△印付加
-        begin
-          //最高出力 10 W,20 W,50 W, 100 W,200 W, 500 W,1 kW,1 W    10125 kHz,14175 kHzが存在するか、すれば △50W局以上
-          if Pos('10   W',S)<>0 then Power:='10W局';
-          if Power='10W局' then if (Pos('10125 kHz',S)<>0)  or (Pos('14175 kHz',S)<>0) then Power:='△10W局';
-          if Pos('20 W',S)<>0 then Power:='VU20,10W局';
-          if Power='VU20,10W局' then if (Pos('10125 kHz',S)<>0)  or (Pos('14175 kHz',S)<>0) then Power:='△VU20,10W局';
-          if Pos('50   W',S)<>0 then Power:='50W局';
-          if Power='50W局' then if (Pos('10125 kHz',S)<>0)  or (Pos('14175 kHz',S)<>0) then Power:='△50W局';
-          if Pos('100   W',S)<>0 then Power:='100W局';
-          if Pos('200   W',S)<>0 then Power:='200W局';
-          if Pos('300   W',S)<>0 then Power:='300W局';
-          if Pos('400   W',S)<>0 then Power:='400W局';
-          if Pos('500   W',S)<>0 then Power:='500W局';
-          if Pos('600   W',S)<>0 then Power:='600W局';
-          if Pos('700   W',S)<>0 then Power:='700W局';
-          if Pos('800   W',S)<>0 then Power:='800W局';          //出力とWの間のスペースの数3
-          if Pos('900   W',S)<>0 then Power:='900W局';
-          if Pos(  '1  kW',S)<>0 then Power:= '1kW局';          //1kW局のみスペースの数2
-          PowerResult:=Power;
-          if (Pos( ' G1E ',S)<>0)  or (Pos( ' A2B ',S)<>0)  or (Pos( ' A2A ',S)<>0)  or (Pos( ' A1B ',S)<>0)
-          then PowerResult:='DATA+'+Power;
-        end;
-
-         //複数自治体に無線局を持っていれば出力の前に★印付加
-      S:=SL.Text; Address:=''; Address1:='';
-      for i:=1 to m do if FCallStr  = Trim(  Copy(SearchCSV(SL[i],21) ,1,9)  ) then       //QTH=SearchCSV(SL[i],22)
-      begin
-        Address:= SearchCSV(SL[i],22);
-        if Address<>'' then if Address1='' then Address1:=Address;              //最初の住所のみ記録
-        if Address<>'' then if i<>1 then if Address1<> address then if Copy(PowerResult,1,2)<> '★' then PowerResult:= '★'+PowerResult;
-      end;
-
-    end;
-  finally
-    SL.Free;
-  end;                 //PowerResultに結果
-end;
-
 
 function  TForm1.SearchCSV(CS:String;Num:Integer):String;     //カンマの何個目の要素を取り出す関数
 var
@@ -462,11 +394,10 @@ end;
   <footer>
     <div class="">
       <p>by JJ8XNP   2019/05/06　　　2020/03/04,2022/09/11 JARL会員検索結果取得追加</p>
-      <p>　　　　　　　　　　　　　　　2022/09/26 無線局最大出力検索追加</p>
       <a href="index.html" ><B>戻る</B></a><br>
     </div>
   </footer>
 </body>
 </html>
 
-© 2022 GitHub, Inc.
+© 2023 GitHub, Inc.
