@@ -284,83 +284,7 @@ begin
 end;
  
  
- 
- 
 
-
-
-
-//■■■■■■■■■■■  JARL会員検索結果取得  ■■■■■■■■■■■■■■■
-procedure TForm1.Button1Click(Sender: TObject);
-begin
-  WebBrowser1.Navigate(
-  'https://www.jarl.com/Page/Search/MemberSearch.aspx?Language=Jp');
-end;
-
-procedure TForm1.Button2Click(Sender: TObject);
-var
-  IEObj           : InternetExplorer;
-  Doc2            : IHtmlDocument2;
-  iInputElement   : IHTMLInputElement;
-  iButtonElement  : DispHTMLButtonElement;
-  IEElement       : IHTMLElement;
-begin
-  IEObj := WebBrowser1.Application as InternetExplorer;
-  Doc2 := IEObj.Document as IHTMLDocument2;
-
-    //iButtonElement:= Doc2.all.item('btnClear', 0) as DispHTMLButtonElement;
-    //iButtonElement.click;                //クリアボタン押す
-
-    iInputElement       := Doc2.All.Item ('txtCallSign',0) as iHTMLInputElement;
-
-    iInputElement.value := 'JJ8JJJ';       //調べたいコールサイン
-
-    iButtonElement:= Doc2.all.item('btnSearch', 0) as DispHTMLButtonElement;
-    iButtonElement.click;                  //検索ボタン押す
-
-    while WebBrowser1.ReadyState < READYSTATE_COMPLETE	 do 
-    begin Application.ProcessMessages; end;
-
-    IEElement := (WebBrowser1.Document as IHTMLDocument2).body.parentElement;
-
-    if  Pos('87ceeb' ,IEElement.outerHTML)<>0 then begin end
-    else
-    begin
-      if       Pos('○ No' ,IEElement.outerHTML)<>0    then Edit1.Text := '△'
-      else if (Pos('○ Yes',IEElement.outerHTML)<>0) 
-          and (Pos('○ Yes',IEElement.outerHTML)<5100) then Edit1.Text := '○'
-      else                                                  Edit1.Text := '×';
-    end;
-end;
-
-//■■■■■■■■■■■ 別の方法 JARL会員検索結果取得 ■■■■■■■■■■■
-function  TForm1.Search_JARL:String;
-var
-  S:UTF8String;   ST:String;   i:Integer;  FCallStr:String;
-begin
-  FCallStr:='JJ8XNP';
-  S:=GetUrlContent('https://www.jarl.com/Page/Search/MemberSearch.aspx?'
-     + '__LASTFOCUS=&__EVENTTARGET=&__EVENTARGUMENT=&__VIEWSTATE=%2FwEPDwUKLTI3MzIwMzYwNw9kFgICAw9kFg4CCQ8PZBYCHgVzdHlsZQUNZGlzc'
-     +'GxheTpub25lO2QCCw8UKwACD2QWAh8ABQ1kaXNwbGF5Om5vbmU7ZGQCDQ8UKwACD2QWAh4FU3R5bGUFDWRpc3BsYXk6bm9uZTtkZAIPDxYCHwAFDWRpc3BsYX'
-     +'k6bm9uZTtkAhEPFgIfAAUNZGlzcGxheTpub25lO2QCFQ8PFgYeB1Rvb2xUaXBlHglCYWNrQ29sb3IKpAEeBF8hU0ICCGRkAh8PD2QWAh8ABQ1kaXNwbGF5Om5'
-     +'vbmU7ZBgCBQlMaXN0VmlldzIPZ2QFCUxpc3RWaWV3MQ9nZBS04f3o0OTe1PM%2F4%2F7V68O9BPqvnOlkHdkTqe0BsGEz&__VIEWSTATEGENERATOR=097A74'
-     +'EB&__EVENTVALIDATION=%2FwEdAAaY%2F8%2BnpNbuk6x7UF4RCvwhkWpkX9aHnOz47z3JMElG1Y7U3Vc0WZ%2BwxclqyPFfzmN13HaNCmKPXwtSIMJvlpwq'
-     +'H%2FvOWBNEQxsmmy2gqOzbi6C3b14QOYyPtGyysa3RdBU7vpuUgVC0GgHQ7JWPHOI9mnW5LyiaOX3DGVMQSmSsSw%3D%3D&txtCallSign='
-     + FCallStr
-     + '&btnSearch=%E6%A4%9C%E3%80%80%E7%B4%A2&hdnMemberType=Jp'
-  );                                                                     //ここがもし変わった場合、変更
-
-  ST:=UTF8Decode(S);     //文字化け解消
-
-  ST:= Copy( ST, 1 ,  Pos('id="JpGuidLine"' , ST) -5  +1    );                   //id="JpGuidLine"  以下を削除
-
-  if (Pos('○ No' ,ST)<>0) then  Result:='△' else
-  if (Pos('○ Yes',ST)<>0) then  Result:='○' else
-  if (Pos('×'    ,ST)<>0) then  Result:='X'  else
-                                 Result:='?';
-end; 
- 
- 
 
 function  TForm1.SearchCSV(CS:String;Num:Integer):String;     //カンマの何個目の要素を取り出す関数
 var
@@ -393,11 +317,11 @@ end;
 
   <footer>
     <div class="">
-      <p>by JJ8XNP   2019/05/06　　　2020/03/04,2022/09/11 JARL会員検索結果取得追加</p>
+      <p>by JJ8XNP   2019/05/06　　　2025/02/01更新</p>
       <a href="index.html" ><B>戻る</B></a><br>
     </div>
   </footer>
 </body>
 </html>
 
-© 2023 GitHub, Inc.
+© 2025 GitHub, Inc.
